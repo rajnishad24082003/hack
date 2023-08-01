@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Real-Time Count</title>
+  </head>
+  <body>
+    <h1>Real-Time Count:</h1>
+    <p id="count">Loading...</p>
+
+    <script>
+      const countElement = document.getElementById("count");
+      const eventSource = new EventSource("/time");
+
+      eventSource.onmessage = (event) => {
+        const count = event.data;
+        countElement.textContent = count;
+      };
+    </script>
+  </body>
+</html>
