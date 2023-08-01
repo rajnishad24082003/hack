@@ -1,0 +1,7 @@
+1) download nssm from https://nssm.cc/download or can directly use nssm.exe file for winX64 which is there in this file
+2) i winX64 skip step 1 and run the following cmmd `nssm install MyNodeProject "C:\Program Files\nodejs\node.exe" "C:\Users\rohit\OneDrive\Desktop\raj\hack\index.js"` or `./nssm install MyNodeProject C:\Program Files\nodejs\node.exe" "C:\Users\rohit\OneDrive\Desktop\raj\hack\index.js"`
+3) i case of error , remove the service 
+-> nssm stop MyNodeProject
+-> nssm remove MyNodeProject confirm
+
+if still error be very carefull with all the paths. mistake will be there with paths only
