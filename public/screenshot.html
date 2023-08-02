@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>screen</title>
+  </head>
+  <body>
+    <img id="image" alt="Image" />
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+      setInterval(() => {
+        socket.emit("RepeatScreenShotTake");
+      }, 3000);
+      socket.on("RepeatScreenShotGet", (data) => {
+        const blob = new Blob([data], { type: "image/png" });
+        const imageUrl = URL.createObjectURL(blob);
+        const imageElement = document.getElementById("image");
+        imageElement.src = imageUrl;
+        console.log(data);
+      });
+    </script>
+  </body>
+</html>
