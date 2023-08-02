@@ -14,7 +14,13 @@ app.get("/camera", (req, res) => {
   camera(req, res);
 });
 app.get("/screenshot", (req, res) => {
+  res.setHeader("Content-Type", "image/png");
+  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("Connection", "keep-alive");
   screenshot(req, res);
+  req.on("close", () => {
+    console.log("Client disconnected");
+  });
 });
 
 app.listen(PORT, () => {
