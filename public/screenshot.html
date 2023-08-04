@@ -4,19 +4,26 @@
     <title>screen</title>
   </head>
   <body>
+    <div class="btn"><button id="click">click</button></div>
     <img id="image" alt="Image" />
     <script src="/socket.io/socket.io.js"></script>
     <script>
       const socket = io();
-      setInterval(() => {
+      // setInterval(() => {
+      //   socket.emit("RepeatScreenShotTake");
+      // }, 1000);
+      const btn = document.getElementById("click");
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
         socket.emit("RepeatScreenShotTake");
-      }, 3000);
+      });
       socket.on("RepeatScreenShotGet", (data) => {
-        const blob = new Blob([data], { type: "image/png" });
+        const blob = new Blob([data], { type: "image/webp" });
         const imageUrl = URL.createObjectURL(blob);
         const imageElement = document.getElementById("image");
         imageElement.src = imageUrl;
         console.log(data);
+        socket.emit("RepeatScreenShotTake");
       });
     </script>
   </body>

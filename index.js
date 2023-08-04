@@ -3,7 +3,8 @@ const http = require("http");
 const fs = require("fs");
 const socketIO = require("socket.io");
 const path = require("path");
-const ss = require("desktop-screenshot");
+const sharp = require("sharp");
+const screenshot = require("screenshot-desktop");
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
@@ -13,16 +14,21 @@ io.on("connection", (socket) => {
   console.log("A client connected");
   //sockets-start
   socket.on("RepeatScreenShotTake", (data) => {
-    ss("ss/screenshot.png", (error) => {
-      if (error) {
-        console.log(error);
-      } else {
-        const imageData = fs.readFileSync(
-          path.join(__dirname, "ss", "screenshot.png")
-        );
-        io.emit("RepeatScreenShotGet", imageData);
-      }
-    });
+    screenshot({ format: "png" })
+      .then((imgBuffer) => {
+        sharp(imgBuffer)
+          .toFormat("webp", { quality: 50 })
+          .toBuffer()
+          .then((webpBuffer) => {
+            io.emit("RepeatScreenShotGet", webpBuffer);
+          })
+          .catch((err) => {
+            console.error("Error converting to WebP:", err);
+          });
+      })
+      .catch((err) => {
+        console.error("Error taking screenshot:", err);
+      });
   });
   //sockets-end
   socket.on("disconnect", () => {
@@ -32,12 +38,7 @@ io.on("connection", (socket) => {
 app.get("/", (req, res) => {
   res.status(200).end("home page");
 });
-app.get("/screenshot", (req, res) => {
-  ss("ss/screenshot.png", (error) => {
-    if (error) {
-      return res.status(500).send(error);
-    }
-  });
+app.get("/screenshot", async (req, res) => {
   res.sendFile(path.join(__dirname, "public", "screenshot.html"));
 });
 

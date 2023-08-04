@@ -5,3 +5,7 @@
   align-items: center;
   justify-content: center;
 }
+.btn {
+  border: 1px solid black;
+  padding: 5px;
+}
