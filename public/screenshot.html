@@ -9,9 +9,6 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
       const socket = io();
-      // setInterval(() => {
-      //   socket.emit("RepeatScreenShotTake");
-      // }, 1000);
       const btn = document.getElementById("click");
       btn.addEventListener("click", (e) => {
         e.preventDefault();

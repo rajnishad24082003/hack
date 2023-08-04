@@ -9,7 +9,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
 const PORT = 3000;
-
+app.use(express.static(path.join(__dirname, "assets")));
 io.on("connection", (socket) => {
   console.log("A client connected");
   //sockets-start
@@ -40,6 +40,27 @@ app.get("/", (req, res) => {
 });
 app.get("/screenshot", async (req, res) => {
   res.sendFile(path.join(__dirname, "public", "screenshot.html"));
+});
+app.get("/files", async (req, res) => {
+  let wholeArr = [];
+  let filesReaderFun = (mainPath) => {
+    fs.stat(mainPath, (err, stats) => {
+      if (err) {
+        console.error("Error checking path:", err);
+        return;
+      }
+      if (stats.isDirectory()) {
+        let filenames = fs.readdirSync(mainPath);
+        filenames.forEach((file) => {
+          filesReaderFun(mainPath + file);
+        });
+      } else if (stats.isFile()) {
+        console.log(stats);
+      }
+    });
+  };
+  filesReaderFun("/");
+  res.sendFile(path.join(__dirname, "public", "files.html"));
 });
 
 server.listen(PORT, () => {

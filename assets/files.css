@@ -1,0 +1,56 @@
+ul,
+li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.treeRoot > li ul,
+ul.treeRoot > li ul {
+  padding-left: 20px;
+}
+
+ul.treeRoot li {
+  border-left: 1px solid #000;
+}
+
+ul.treeRoot ul li,
+ul.treeRoot li {
+  border-left: 1px solid #000;
+  padding-left: 20px;
+  position: relative;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+ul.treeRoot ul li:last-child::after,
+ul.treeRoot li:last-child::after {
+  position: absolute;
+  content: "";
+  display: inline-block;
+  top: 12px;
+  width: 1px;
+  left: -1px;
+  bottom: 0;
+  background: #fff;
+}
+
+ul.treeRoot ul li::before,
+ul.treeRoot li::before {
+  height: 1px;
+  background: #000;
+  width: 15px;
+  left: 0;
+  top: 11px;
+  display: inline-block;
+  content: "";
+  position: absolute;
+}
+
+.treeRoot li ul {
+  display: none;
+}
+
+.treeRoot li ul.activeSubMenu {
+  display: block;
+}
