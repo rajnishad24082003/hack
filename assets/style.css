@@ -9,3 +9,12 @@
   border: 1px solid black;
   padding: 5px;
 }
+/*files.ejs*/
+.folder {
+  color: rgb(0, 48, 124);
+  font-weight: bolder;
+}
+.notAcessible {
+  color: rgb(255, 81, 81);
+}
+/*files.ejs*/

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamic HTML</title>
+  </head>
+  <link rel="stylesheet" href="style.css" />
+  <body>
+    <h1>all the file</h1>
+    <ul>
+      <% wholeData.forEach((val) => { %> <%if(val.isFile){%>
+      <%if(val.notAcessible){%>
+      <li class="notAcessible"><%= val.name %></li>
+      <%}else{%>
+      <li class="file"><%= val.name %></li>
+      <%}%> <%}else{%>
+      <li class="folder"><%= val.name %></li>
+      <%}%> <% }); %>
+    </ul>
+  </body>
+</html>
